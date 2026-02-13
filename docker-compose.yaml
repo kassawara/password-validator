@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+
+  app:
+    image: itau-ej1-docker.artifactory.prod.aws.cloud.ihf/itau-corp-itau-ej1-container-air:v0.0.4-69a34d5
+    ports:
+      - "8080:8080"
+      - "2345:2345"
+    working_dir: /app/
+    env_file: .env
+    volumes:
+      - ./:/app:rw,delegated
+      - .dev/proxy.cer:/etc/ssl/certs/proxy.cer
+    networks: [techstack]
+
+networks:
+  techstack:
+    external: true

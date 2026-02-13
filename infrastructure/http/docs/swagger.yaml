@@ -1,0 +1,47 @@
+definitions:
+  input.PasswordInput:
+    properties:
+      password:
+        type: string
+    type: object
+  output.PasswordOutput:
+    properties:
+      isValid:
+        type: boolean
+    type: object
+  response.Error:
+    properties:
+      error:
+        type: string
+      password: {}
+    type: object
+info:
+  contact: {}
+paths:
+  /password/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validates a password according to security rules
+      parameters:
+      - description: Password validation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/input.PasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Validation result
+          schema:
+            $ref: '#/definitions/output.PasswordOutput'
+        "422":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Validate password
+      tags:
+      - Password
+swagger: "2.0"
