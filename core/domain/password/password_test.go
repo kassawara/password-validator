@@ -39,3 +39,31 @@ func TestPasswordValidation(t *testing.T) {
 		})
 	}
 }
+
+func TestWithPassword(t *testing.T) {
+	p := &Password{}
+	param := WithPassword("Test123!@#")
+	param(p)
+	if p.password != "Test123!@#" {
+		t.Errorf("WithPassword did not set the password correctly, got: %s", p.password)
+	}
+}
+
+func TestPassword_Getters(t *testing.T) {
+	p := &Password{password: "Test123!@#", isValid: true}
+	if p.Password() != "Test123!@#" {
+		t.Errorf("Password() getter returned wrong value, got: %s", p.Password())
+	}
+	if !p.IsValid() {
+		t.Errorf("IsValid() getter returned false, expected true")
+	}
+}
+
+func TestContainsRune(t *testing.T) {
+	if containsRune("abc", 'd') {
+		t.Errorf("containsRune should return false when rune is not present")
+	}
+	if !containsRune("abc", 'a') {
+		t.Errorf("containsRune should return true when rune is present")
+	}
+}
